@@ -13,11 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Objects;
 
-@WebServlet(name = "studentViewServlet", urlPatterns = "/student/view")
-public class StudentViewServlet extends HttpServlet {
+public class StudentViewController implements Command {
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public String excute(HttpServletRequest req, HttpServletResponse resp) {
         ServletContext servletContext = req.getServletContext();
 
 
@@ -27,11 +26,13 @@ public class StudentViewServlet extends HttpServlet {
 
         Student student = studentRepository.get(id);
         if (Objects.isNull(student)) {
-            resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+//            resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            return "/404.jsp";
         } else {
             req.setAttribute("student", student);
 
-            req.setAttribute("view", "/studentView.jsp");
+            return "/studentView.jsp";
+//            req.setAttribute("view", "/studentView.jsp");
 //            RequestDispatcher rd = req.getRequestDispatcher("/studentView.jsp");
 //            rd.forward(req, resp);
         }

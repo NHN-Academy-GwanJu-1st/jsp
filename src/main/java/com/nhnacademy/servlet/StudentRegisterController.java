@@ -11,11 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "studentRegisterServlet", urlPatterns = "/student/register")
-public class StudentRegisterServlet extends HttpServlet {
+public class StudentRegisterController implements Command {
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public String excute(HttpServletRequest req, HttpServletResponse resp) {
 
         StudentRepository studentRepository = (StudentRepository) req.getServletContext().getAttribute("studentRepository");
 
@@ -28,7 +27,8 @@ public class StudentRegisterServlet extends HttpServlet {
 
         studentRepository.addStudent(student);
 
-        req.setAttribute("view", "redirect:/student/view.do?id=" + student.getId());
+        return "redirect:/student/view.do?id=" + student.getId();
+//        req.setAttribute("view", "redirect:/student/view.do?id=" + student.getId());
 //        resp.sendRedirect("/student/view?id=" + student.getId());
     }
 }
